@@ -48,7 +48,7 @@ define([
 
         if (!instanceParams.dev){
             styleDownloads = [
-                "src/view/css/style-lib-dist.min.css"
+                "src/view/css/style-lib.min.css"
                 // "src/view/css/style-compiled.css"
                 // "src/libs/bootstrap-datetimepicker.css"
             ];
