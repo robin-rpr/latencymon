@@ -1,6 +1,8 @@
-# LatencyMon
+# LatencyMON
 
-Monitor and compare latencies measured from [RIPE Atlas](https://atlas.ripe.net) in realtime.
+Monitor and compare latencies measured from [RIPE Atlas](https://atlas.ripe.net) in real-time.
+
+## Introduction
 
 To learn more about LatencyMON and how it can help you monitor and compare latencies in real-time, be sure to check out the official RIPE Labs Article at https://labs.ripe.net/Members/massimo_candela/new-ripe-atlas-tool-latencymon. This page provides detailed information about how to use LatencyMON and how to embed it in your own webpage.
 
