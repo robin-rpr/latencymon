@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Monitor and compare latencies measured from [RIPE Atlas](https://atlas.ripe.net) in realtime.",
   "scripts": {
-    "build": "bash -c build.sh",
+    "build": "bash -e build.sh",
     "build:jquery-libs": "r.js -o builders/jquery-libs.build.js",
     "build:jquery-libs-amd": "r.js -o builders/jquery-libs-amd.build.js",
-    "build:style-lib": "lessc .tmp/view/css/style-lib.less .tmp/view/css/style-lib.css && minify -o .tmp/view/css/style-lib.min.css .tmp/view/css/style-lib.css",
-    "build:main": "r.js -o builders/main.build.js",
-    "examples": "([ -d \"dist\" ] && http-server examples) || echo \"Error. No build in /dist found.\nUse \\\"npm run build\\\".\" && exit 1",
-    "test": "([ -d \"dist\" ] && http-server test) || echo \"Error. No build in /dist found.\nUse \\\"npm run build\\\".\" && exit 1"
+    "build:style-lib": "lessc .tmp/view/css/style-lib.less .tmp/view/css/style-lib.css && minify .tmp/view/css/style-lib.css > .tmp/view/css/style-lib.min.css",
+    "build:latencymon": "r.js -o builders/latencymon.build.js",
+    "examples": "([ -d \"dist\" ] && http-server -o examples) || echo \"Error. No build in /dist found.\nUse \\\"npm run build\\\".\" && exit 1",
+    "test": "([ -d \"dist\" ] && http-server -o test) || echo \"Error. No build in /dist found.\nUse \\\"npm run build\\\".\" && exit 1"
   },
   "repository": {
     "type": "git",

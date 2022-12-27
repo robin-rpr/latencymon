@@ -2,10 +2,11 @@
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-TMP_DIR=`.tmp`
+TMP_DIR=".tmp"
+OUT_DIR="dist"
 
 if [ -d "$TMP_DIR" ]; then rm -Rf $TMP_DIR; fi
-cp -R src TMP_DIR
+cp -R $DIR/src $DIR/$TMP_DIR
 
 # CJQuery Libs
 npm run build:jquery-libs
@@ -17,6 +18,5 @@ npm run build:style-lib
 # Build
 npm run build:latencymon
 
-cp -R TMP_DIR dist
-
-exit 0;
+if [ -d "$OUT_DIR" ]; then rm -Rf $OUT_DIR; fi
+cp -R $DIR/$TMP_DIR $DIR/dist
