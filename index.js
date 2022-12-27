@@ -1,23 +1,25 @@
+
+
 /**
- * The location of the widget
+ * Customization, put your URL here
  */
 LATENCYMON_WIDGET_URL = ((typeof LATENCYMON_EXTERNAL_WIDGET_URL == 'undefined') ? "https://www-static.ripe.net/static/rnd-ui/atlas/static/measurements/widgets/latencymon/" : LATENCYMON_EXTERNAL_WIDGET_URL) ;
 
 /**
- * Name space configuration
+ * Initialize Latencymon on Window
  */
 window.atlas = window.atlas || {};
 window.atlas._widgets = window.atlas._widgets || {};
 window.atlas._widgets.latencymon = window.atlas._widgets.latencymon || {};
 window.atlas._widgets.latencymon.urls = window.atlas._widgets.latencymon.urls || {
-        libs: LATENCYMON_WIDGET_URL + "dev/libs/",
-        env: LATENCYMON_WIDGET_URL + "dev/environment/",
-        connector: LATENCYMON_WIDGET_URL + "dev/connector/",
-        model: LATENCYMON_WIDGET_URL + "dev/model/",
-        view: LATENCYMON_WIDGET_URL + "dev/view/",
-        controller: LATENCYMON_WIDGET_URL + "dev/controller/",
-        filter: LATENCYMON_WIDGET_URL + "dev/filter/",
-        session: LATENCYMON_WIDGET_URL + "dev/session/"
+        libs: LATENCYMON_WIDGET_URL + "src/libs/",
+        env: LATENCYMON_WIDGET_URL + "src/environment/",
+        connector: LATENCYMON_WIDGET_URL + "src/connector/",
+        model: LATENCYMON_WIDGET_URL + "src/model/",
+        view: LATENCYMON_WIDGET_URL + "src/view/",
+        controller: LATENCYMON_WIDGET_URL + "src/controller/",
+        filter: LATENCYMON_WIDGET_URL + "src/filter/",
+        session: LATENCYMON_WIDGET_URL + "src/session/"
     };
 window.atlas._widgets.latencymon.instances = window.atlas._widgets.latencymon.instances || {
         requested: [],
@@ -37,9 +39,6 @@ if (!window.atlas._widgets.widgetInjectorRequested) { // Only one injector
     window.atlas._widgets.latencymon.tmp_scrip.parentNode.appendChild(window.atlas._widgets.injectorScript);
 }
 
-/**
- * Widget injector
- */
 function initLatencymon(domElement, instanceParams, queryParams){
     var run;
 
@@ -51,13 +50,13 @@ function initLatencymon(domElement, instanceParams, queryParams){
 
         while (instance){
             (function(instances, instance){
-                if (instance.instanceParams.dev) { // Load dev version
-                    require([LATENCYMON_WIDGET_URL + 'latencymon-loader.js'], function(Latencymon){
+                if (instance.instanceParams.src) { // Load src version
+                    require([LATENCYMON_WIDGET_URL + 'app.js'], function(Latencymon){
                         instances.running[instance.domElement] = Latencymon(instance);
                     });
                 } else { // Load deployed version
-                    require([LATENCYMON_WIDGET_URL + 'latencymon-dist.js'], function () {
-                        require(['latencymon-loader'], function(Latencymon){
+                    require([LATENCYMON_WIDGET_URL + 'latencymon.min.js'], function () {
+                        require(['app'], function(Latencymon){
                             instances.running[instance.domElement] = Latencymon(instance);
                         });
                     });
@@ -91,7 +90,7 @@ function initLatencymon(domElement, instanceParams, queryParams){
             if (instance) {
                 return instance;
             } else {
-                throw "Widget not loaded yet. Try again in a few seconds."
+                throw "Loading, try again in a few seconds..."
             }
         }
     };

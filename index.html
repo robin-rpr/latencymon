@@ -2,15 +2,15 @@
 <head>
     <title>LatencyMON</title>
     <script>LATENCYMON_EXTERNAL_WIDGET_URL = "";</script>
-    <script src="latencymon-widget-main.js"></script>
+    <script src="index.js"></script>
 </head>
 <body>
 
-<div id="put-here" style="width: 90%; margin: auto;"></div>
+<div id="latencymon" style="width: 90%; margin: auto;"></div>
 
 <script>
     var latencymon = initLatencymon(
-            '#put-here',
+            '#latencymon',
             {
                 autoStart: true,
                 autoStartGrouping: true,
