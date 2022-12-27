@@ -60,12 +60,11 @@ If you are using LatencyMON or displaying an image of the tool on your website, 
 
 In all references to LatencyMON, please be sure to use the correct name of the tool. When sharing a link to a LatencyMON instance or an image of the tool on social media, please include the hashtag #LatencyMON. It is also important to ensure that the LatencyMON and RIPE Atlas watermarks are always visible.
 
+[RIPE Atlas](https://atlas.ripe.net) for providing the latency data.
+
 ## License
 This project is licensed under the GPL-3.0 License - see the [LICENSE](./LICENSE) file for details.
 
 ## Authors
 
 See the [AUTHORS](./AUTHORS) file for a list of contributors.
-Acknowledgments
-
-- [RIPE Atlas](https://atlas.ripe.net) for providing the latency data.
