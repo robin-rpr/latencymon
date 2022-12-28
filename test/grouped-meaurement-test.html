@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Grouped Measurement Test</title>
+  </head>
+  <body>
+    <script>
+      /* Define before index.js import */
+      LATENCYMON_EXTERNAL_WIDGET_URL =
+        window.location.protocol + "//" + window.location.host + "/dist/";
+    </script>
+    <script src="../dist/index.js"></script>
+    <h1>Grouped Measurement Test</h1>
+    <p>Observe the Browser Console for Logs/Warnings/Errors</p>
+    <br />
+    <div id="latencymon"></div>
+    <script>
+      initLatencymon(
+        "#latencymon",
+        { autoStartGrouping: false }, // Tool options, see table below for more info
+        {
+          measurements: [1005, 2005],
+          groups: [
+            {
+              measurementId: 1005,
+              probes: [2886, 3046, 3111, 3118],
+              id: "i-root-v4",
+              type: "multi-probes",
+            },
+            {
+              measurementId: 2005,
+              probes: [2886, 3046, 3111, 3118],
+              id: "i-root-v6",
+              type: "multi-probes",
+            },
+          ],
+        }
+      );
+    </script>
+  </body>
+</html>

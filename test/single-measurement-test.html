@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Single Measurement Test</title>
+  </head>
+  <body>
+    <script>
+      /* Define before index.js import */
+      LATENCYMON_EXTERNAL_WIDGET_URL =
+        window.location.protocol + "//" + window.location.host + "/dist/";
+    </script>
+    <script src="../dist/index.js"></script>
+    <h1>Single Measurement Test</h1>
+    <p>Observe the Browser Console for Logs/Warnings/Errors</p>
+    <br />
+    <div id="latencymon"></div>
+    <script>
+      initLatencymon(
+        "#latencymon",
+        {}, // Tool options, see table below for more info
+        {
+          dataFilter: "natural",
+          measurements: [47791180],
+        } // Query options, see table below for more info
+      );
+    </script>
+  </body>
+</html>

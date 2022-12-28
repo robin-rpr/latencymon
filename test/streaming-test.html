@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>LatencyMON Streaming Test</title>
+  </head>
+  <body>
+    <script>
+      /* Define before index.js import */
+      LATENCYMON_EXTERNAL_WIDGET_URL = window.location.protocol + "//" + window.location.host + "/dist/";
+    </script>
+    <script src="../dist/index.js"></script>
+    <script src="../dist/libs/socket.io.js"></script>
+    <h1>LatencyMON Streaming Test</h1>
+    <p>Observe the Browser Console for Logs/Warnings/Errors</p>
+    <br />
+    <h3>WebSocket Metrics:</h3>
+    <ul style="font-family: monospace;">
+      <li>Measurement ID: <span id="measurement-id">Not defined<span></li>
+      <li>WebSocket URL: <span id="websocket-url">Not defined<span></li>
+      <li>Connection established: <span id="connection-established">No<span></li>
+      <li>Probe Status Received: <span id="probestatus-received">0<span></li>
+      <li>Results Received: <span id="results-received">0<span></li>
+      <li>Metadata Received: <span id="metadata-received">0<span></li>
+      <li>Errors Received: <span id="errors-received">0<span></li>
+    </ul>
+    <span style="font-style: italic; font-size: small;">(Updates every <b id="refresh-timeout"></b> Seconds)</span>
+    <script>
+      /* Configure here! */
+      var measurementId = 2340408; // Set Measurement ID
+      var refreshTimeout = 1000; // How often Metrics are refreshed (in Milliseconds)
+      var wsURL = "https://atlas-stream.ripe.net:443"
+      
+      /* Create WebSocket Connection */
+      var socket = io(wsURL, { path : "/stream/socket.io" });
+
+      /* WebSocket Metrics */
+      var results = 0,
+        probestatus = 0,
+        metadata = 0,
+        errors = 0;
+
+      document.getElementById('measurement-id').innerText = measurementId;
+      document.getElementById('websocket-url').innerText = wsURL;
+      document.getElementById('refresh-timeout').innerText = refreshTimeout / 1000;
+      
+      setInterval(function(){
+        document.getElementById('results-received').innerText = results;
+        document.getElementById('probestatus-received').innerText = probestatus;
+        document.getElementById('metadata-received').innerText = metadata;
+        document.getElementById('errors-received').innerText = errors;
+      }, refreshTimeout);
+
+      /* Socket.io Connect */
+      socket.on("connect", function (result) {
+        document.getElementById('connection-established').innerText = 'Yes';
+        console.log(`[Test] Successfully established WebSocket connection to ${wsURL}`);
+      });
+
+      /* Event Listeners */
+      socket.on("atlas_probestatus", function (status) {
+        probestatus++;
+        console.log("[Test] atlas_probestatus", status);
+      });
+
+      socket.on("atlas_result", function (result) {
+        results++;
+        console.log("[Test] atlas_result", result);
+      });
+
+      socket.on("atlas_metadata", function(metadata){
+        metadata++;
+        console.log("[Test] atlas_metadata", metadata);
+
+        socket.emit("[Test] atlas_subscribe", { stream_type: "result", msm: metadata.id });
+      });
+
+      socket.on("atlas_error", function (error) {
+        errors++;
+        console.warn("[Test] atlas_error", error);
+      });
+
+      /* Subscribe to results coming from all the probes involved in the measurement */
+      socket.emit("atlas_subscribe", { stream_type: "probestatus" })
+      socket.emit("atlas_subscribe", { stream_type: "result", destinationPrefix: "192/8" });
+      socket.emit("atlas_subscribe", { stream_type: "result", type: "dns", destinationPrefix: "200/8" });
+      socket.emit("atlas_subscribe", { stream_type: "result", type: "dns", destinationPrefix: "176/8" });
+      socket.emit("atlas_subscribe", { stream_type: "result", destinationAddress: "193.0.0.166" });
+      socket.emit("atlas_subscribe", { stream_type: "result", type: "ping", acceptedFields: ["msm_id"] });
+      socket.emit("atlas_subscribe", { stream_type: "result", type: "traceroute" });
+      socket.emit("atlas_subscribe", { stream_type: "result", type: "traceroute", passThroughHost: "172.24.0.1" });
+      socket.emit("atlas_subscribe", { stream_type: "result", type: "traceroute", passThroughHost: "203.178.137.194" });
+      socket.emit("atlas_subscribe", { stream_type: "result", type: "traceroute", passThroughPrefix: "123/8" });
+      socket.emit("atlas_subscribe", { stream_type: "result", msm: 1791207 });
+      socket.emit("atlas_subscribe", { stream_type: "probestatus", sendBacklog: true });
+      socket.emit("atlas_subscribe", { stream_type: "probestatus",  sendBacklog: true });
+      socket.emit("atlas_subscribe", { stream_type: "result", type: "ping" });
+
+
+      // Subscription Stresstest
+      /*for (var i = 0; i < 100; i++) {
+        socket.emit("atlas_subscribe", {
+          msm: 1001,
+          buffering: true,
+          stream_type: "result", // Possible stream_type's: "type", "prb", "msm", "sourceAddress", "sourcePrefix", "destinationAddress", and "destinationPrefix"
+        }); 
+          
+        socket.emit("atlas_subscribe", {
+          stream_type: "result",
+          type: "traceroute"
+        });
+
+        socket.emit("atlas_result", {
+            stream_type: "result",
+            // speed: 600,
+            // sendBacklog: true
+            // msm: 10301,
+            // startTime: 1425623200
+        });
+      }*/
+    </script>
+  </body>
+</html>
