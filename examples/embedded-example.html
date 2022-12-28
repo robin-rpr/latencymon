@@ -1,12 +1,23 @@
-<HTML>
-    <script>LATENCYMON_EXTERNAL_WIDGET_URL = "../dist/";</script>
-<script src="../dist/index.js"></script>
-<div id="1688302"></div>
-<script>
-    initLatencymon(
-            '#1688302',
-            {dev:false}, // Tool options, see table below for more info
-            { measurements:[1688302] } // Query options, see table below for more info
-    );
-</script>
-</HTML>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Embedded Example</title>
+  </head>
+  <body>
+    <script>
+      /* Define before index.js import */
+      LATENCYMON_EXTERNAL_WIDGET_URL =
+        window.location.protocol + "//" + window.location.host + "/dist/";
+    </script>
+    <script src="../dist/index.js"></script>
+    <div id="latencymon"></div>
+    <script>
+      initLatencymon(
+        "#latencymon",
+        { dev: false }, // Tool options, see table below for more info
+        { measurements: [47791180] } // Query options, see table below for more info
+      );
+    </script>
+  </body>
+</html>

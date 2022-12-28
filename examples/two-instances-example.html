@@ -1,38 +1,42 @@
-<html>
-<head>
-    <title>LatencyMON</title>
-    <script>LATENCYMON_EXTERNAL_WIDGET_URL = "../dist/";</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Two Instances Example</title>
+  </head>
+  <body>
+    <script>
+      /* Define before index.js import */
+      LATENCYMON_EXTERNAL_WIDGET_URL =
+        window.location.protocol + "//" + window.location.host + "/dist/";
+    </script>
     <script src="../dist/index.js"></script>
-</head>
-<body>
+    <div id="one" style="width: 90%; margin: auto"></div>
+    <div id="two" style="width: 90%; margin: auto"></div>
+    <script>
+      var latencymonOne = initLatencymon(
+        "#one",
+        {
+          autoStart: true,
+          autoStartGrouping: true,
+          dev: false,
+        },
+        {
+          measurements: [47791180],
+        }
+      );
 
-<div id="put-here1" style="width: 90%; margin: auto;"></div>
-<div id="put-here2" style="width: 90%; margin: auto;"></div>
-
-<script>
-    var latencymon1 = initLatencymon(
-            '#put-here1',
-            {
-                autoStart: true,
-                autoStartGrouping: true,
-                dev: false
-            }, {
-                measurements: [1791207]
-            });
-
-
-    var latencymon2 = initLatencymon(
-            '#put-here2',
-            {
-                autoStart: true,
-                autoStartGrouping: true,
-                dev: true
-            }, {
-                measurements: [6892011]
-            });
-
-</script>
-
-
-</body>
+      var latencymonTwo = initLatencymon(
+        "#two",
+        {
+          autoStart: true,
+          autoStartGrouping: true,
+          dev: true,
+        },
+        {
+          measurements: [6892011],
+        }
+      );
+    </script>
+  </body>
 </html>
