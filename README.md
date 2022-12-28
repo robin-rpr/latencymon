@@ -1,3 +1,6 @@
+**Status:** Mirror of https://gitlab.ripe.net/rroper/latencymon
+<img src="preview.png" alt="Alt text" align="right" height="300">
+
 # LatencyMON
 
 Monitor and compare latencies measured from [RIPE Atlas](https://atlas.ripe.net) in real-time.
