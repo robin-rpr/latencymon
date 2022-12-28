@@ -1,4 +1,3 @@
-**Status:** Mirror of https://gitlab.ripe.net/rroper/latencymon
 <img src="preview.png" alt="Alt text" align="right" height="300">
 
 # LatencyMON
